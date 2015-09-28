@@ -230,6 +230,18 @@ class QGModel(model.Model):
         self.q_bc = np.fft.irfft2(self.qh_bc)
 
 
+    def layer2modal(self):
+        """ calculate modal streamfunction and PV """
+        self.ph_bt = (self.ph[0,:,:].squeeze() + self.ph[1,:,:].squeeze())/2.
+        self.ph_bc = (self.ph[0,:,:].squeeze() - self.ph[1,:,:].squeeze())/2.
+
+        self.qh_bt = -self.wv2*self.ph_bt
+        self.qh_bc = -(self.wv2+self.rd**-2)*self.ph_bc
+
+        self.q_bt = np.fft.irfft2(self.qh_bt)
+        self.q_bc = np.fft.irfft2(self.qh_bc)
+
+
     def _calc_diagnostics(self):
         # here is where we calculate diagnostics
         if (self.t>=self.dt) and (self.tc%self.taveints==0):
