@@ -81,9 +81,6 @@ class BTModel(model.Model):
         # topography
         self.hb = self.hb * self.f/self.H
 
-        # topography
-        self.hb = self.hb * self.f/self.H
-
         # complex versions, multiplied by k, speeds up computations to pre-compute
         self.ikQy = self.Qy * 1j * self.k
         self.ilQx = self.Qy * 1j * self.l
