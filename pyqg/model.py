@@ -176,6 +176,15 @@ class Model(PseudoSpectralKernel):
         # logfile
         self.logfile = logfile
 
+        if hb is None:
+                # topography; this is necessary to pass on
+                # information to the kernel; this is sloppy
+                # since there's no point in computing the 
+                # topographic term if there's no topography,
+                # but we have to pass on info to the kernel...
+            self.hb = np.zeros((ny,nx))
+        else:
+            self.hb = hb
 
         self._initialize_grid()
         self._initialize_background()

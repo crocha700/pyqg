@@ -97,28 +97,9 @@ class QGModel(model.Model):
         self.H2 = H1/delta
         self.U1 = U1
         self.U2 = U2
-<<<<<<< 7d6eaf15c60fe502b5a79dd621ca98ff4897c2a0
         self.V1 = V1
         self.V2 = V2
 
-||||||| merged common ancestors
-=======
-        self.V1 = 0.
-        self.V2 = 0.
-
-
->>>>>>> Adds topographic call to kernel
-        #self.filterfac = filterfac
-<<<<<<< 7d6eaf15c60fe502b5a79dd621ca98ff4897c2a0
-
-||||||| merged common ancestors
-        
-=======
-        
-        self.f = f
-        self.hb =hb
-
->>>>>>> Adds topographic call to kernel
         self.nz = 2
         
         super(QGModel, self).__init__(**kwargs)
@@ -169,8 +150,7 @@ class QGModel(model.Model):
 ||||||| merged common ancestors
 =======
        # topography
-        if self.hb is not None:
-            self.hb = self.hb * self.f/self.H2
+        self.hb = self.hb * self.f/self.H2
 
 >>>>>>> Adds topographic call to kernel
         # layer spacing
