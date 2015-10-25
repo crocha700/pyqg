@@ -90,6 +90,8 @@ cdef class PseudoSpectralKernel:
     # number of elements per work group in the y / l direction
     cdef int chunksize
 
+    cdef bint linear
+
     # pyfftw objects (callable)
     cdef object fft_q_to_qh
     cdef object ifft_qh_to_q
@@ -113,6 +115,8 @@ cdef class PseudoSpectralKernel:
                     DTYPE_real_t dt=1.0,
                     DTYPE_real_t rek=0.0,
                     fftw_num_threads=1,
+                    fftw_num_threads=1,
+                    linear=0,
     ):
         self.Nz = Nz
         self.Ny = Ny
@@ -121,7 +125,6 @@ cdef class PseudoSpectralKernel:
         self.Nk = Nx/2 + 1
 
         self._rek = rek
-
         ### none of this shape checking works
         #assert a.shape == (self.Nz, self.Nz self.Nl, self.Nk):
         #assert k.shape == (self.Nk,):
@@ -369,6 +372,7 @@ cdef class PseudoSpectralKernel:
                     self.uq[k,j,i] = (self.u[k,j,i]+self.Ubg[k]) * self.q[k,j,i]
                     self.vq[k,j,i] = (self.v[k,j,i]+self.Vbg[k]) * self.q[k,j,i]
         
+<<<<<<< fd39565116dadad0591b403205180e55448f0b4d
        # add topographic term
         for j in prange(self.Ny, nogil=True, schedule='static',
                   chunksize=self.chunksize,
@@ -379,6 +383,38 @@ cdef class PseudoSpectralKernel:
                 self.vq[self.Nz-1,j,i] += (self.v[self.Nz-1,j,i] +
                         self.Vbg[self.Nz-1]) * self._hb[j,i]
    
+||||||| merged common ancestors
+||||||| merged common ancestors
+                    self.vq[k,j,i] = (self.v[k,j,i]+self.Vbg[j]) * self.q[k,j,i]
+        
+=======
+                    self.vq[k,j,i] = (self.v[k,j,i]+self.Vbg[k]) * self.q[k,j,i]
+           
+>>>>>>> fixed bug in the topographic term
+        # add topographic term
+        if self._hb is not None:
+
+            for j in prange(self.Ny, nogil=True, schedule='static',
+                      chunksize=self.chunksize,  
+                      num_threads=self.num_threads):
+                for i in range(self.Nx):
+                    self.uq[self.Nz-1,j,i] += (self.u[self.Nz-1,j,i] + 
+                            self.Ubg[self.Nz-1]) * self._hb[j,i]
+                    self.vq[self.Nz-1,j,i] += (self.v[self.Nz-1,j,i] +
+                            self.Vbg[self.Nz-1]) * self._hb[j,i]
+
+=======
+        # add topographic term
+        for j in prange(self.Ny, nogil=True, schedule='static',
+                  chunksize=self.chunksize,  
+                  num_threads=self.num_threads):
+            for i in range(self.Nx):
+                self.uq[self.Nz-1,j,i] += (self.u[self.Nz-1,j,i] + 
+                        self.Ubg[self.Nz-1]) * self._hb[j,i]
+                self.vq[self.Nz-1,j,i] += (self.v[self.Nz-1,j,i] +
+                        self.Vbg[self.Nz-1]) * self._hb[j,i]
+
+>>>>>>> Rebasing with master
         # transform to get spectral advective flux
         with gil:
             self.fft_uq_to_uqh()
@@ -524,6 +560,7 @@ cdef class PseudoSpectralKernel:
             return np.asarray(self.vq)
 
 
+<<<<<<< fd39565116dadad0591b403205180e55448f0b4d
 # logger
 def _initialize_logger(self,debug=False):
 
@@ -538,6 +575,11 @@ def _initialize_logger(self,debug=False):
     if debug:
         logger.setLevel(logging.DEBUG)
 
+||||||| merged common ancestors
+
+
+=======
+>>>>>>> Rebasing with master
 # general purpose timestepping routines
 # take only complex values, since that what the state variables are
 def tendency_forward_euler(DTYPE_real_t dt,

@@ -87,6 +87,7 @@ class Model(PseudoSpectralKernel):
         #use_fftw = False,               # fftw flag
         #teststyle = False,            # use fftw with "estimate" planner to get reproducibility
         ntd = 1,                    # number of threads to use in fftw computations
+        linear = False,
         quiet = False,
         logfile = None,
         ):
@@ -148,6 +149,7 @@ class Model(PseudoSpectralKernel):
         self.tavestart = tavestart
         self.taveint = taveint
         self.quiet = quiet
+        self.linear = linear
         self.useAB2 = useAB2
         # fft
         #self.use_fftw = use_fftw
@@ -259,36 +261,33 @@ class Model(PseudoSpectralKernel):
                 self.omg[i,j] = evals.T[imax.T[i,j],i,j]
                 self.evec[:,i,j] = evecs.T[imax.T[i,j],:,i,j]
 
-    def vertical_modes(self):
-        """ Calculate standard vertical modes. Simply
-            the eigenvectors of the stretching matrix S """
-
-        evals,evecs = np.linalg.eig(-self.S)
-
-        asort = evals.argsort()
-
-        # deformation radii
-        self.radii = np.zeros(self.nz)
-        self.radii[0] = 9.81*self.H/np.abs(self.f) # barotropic def. radius
-        self.radii[1:] = np.sqrt(1./evals[asort][1:])
-
-        # eigenstructure (it would be good to normalize this...)
-        self.pmodes = evecs[:,asort]
-
+        
     def stability_analysis(self):
         """ Baroclinic instability analysis """
         self.omg = np.zeros_like(self.wv)+0.j
+        self.evec = np.zeros_like(self.qh)
         I = np.eye(self.nz)
+        
+        L2 = self.S[:,:,np.newaxis,np.newaxis] - self.wv2*I[:,:,np.newaxis,np.newaxis]
+        Q =  I[:,:,np.newaxis,np.newaxis]*(self.ikQy - self.ilQx).imag
+        
+        Uk =(self.Ubg*I)[:,:,np.newaxis,np.newaxis]*self.k
+        Vl =(self.Vbg*I)[:,:,np.newaxis,np.newaxis]*self.l
+        L3 = np.einsum('ij...,jk...->ik...',Uk+Vl,L2)
+        M = np.einsum('...ij,...jk->...ik',np.linalg.inv(L2.T),(L3+Q).T)
+
+        evals,evecs = np.linalg.eig(M) 
+    
+        # select the mode with maximum growth rate
+        # this is sloppy; it would be better to
+        # avoid the for loop...
+        imax = evals.imag.argmax(axis=-1)
 
         for i in range(self.nl):
             for j in range(self.nk):
+                self.omg[i,j] = evals.T[imax.T[i,j],i,j]
+                self.evec[:,i,j] = evecs.T[imax.T[i,j],:,i,j]
 
-                # create matrices
-                L2 = self.S - self.wv2[i,j]*I
-                Q = (self.ikQy - self.ilQx).imag[:,i,j]
-                L3 = np.dot(self.Ubg*I*self.k[i,j],L2) +\
-                    np.dot(self.Vbg*I*self.l[i,j],L2)
-        
     def vertical_modes(self):
         """ Calculate standard vertical modes. Simply
             the eigenvectors of the stretching matrix S """
@@ -304,11 +303,7 @@ class Model(PseudoSpectralKernel):
 
         # eigenstructure (it would be good to normalize this...)
         self.pmodes = evecs[:,asort] 
-                # calculate most unstable mode
-                evals,evecs = sp.linalg.eig(L3+Q*I,L2)
-                imax = evals.imag.argmax()
-                eval_max = evals[imax]
-                self.omg[i,j] = eval_max
+
 
     ### PRIVATE METHODS - not meant to be called by user ###
 
