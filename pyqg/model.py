@@ -3,6 +3,7 @@ import scipy as sp
 from kernel import PseudoSpectralKernel, tendency_forward_euler, tendency_ab2, tendency_ab3
 from numpy import pi
 import logging
+
 try:
     import mkl
     np.use_fastnumpy = True
@@ -285,7 +286,6 @@ class Model(PseudoSpectralKernel):
                 eval_max = evals[imax]
                 self.omg[i,j] = eval_max
 
->>>>>>> Adds stability analysis
     ### PRIVATE METHODS - not meant to be called by user ###
 
     def _step_forward(self):
@@ -395,15 +395,6 @@ class Model(PseudoSpectralKernel):
             fftw_num_threads=self.ntd,
         )
 
-        self.logger.info(' Kernel initialized')
-
-
-        # still need to initialize a few state variables here, outside kernel
-        # this is sloppy
-        #self.dqhdt_forc = np.zeros_like(self.qh)
-        #self.dqhdt_p = np.zeros_like(self.qh)
-        #self.dqhdt_pp = np.zeros_like(self.qh)
-
     # logger
     def _initialize_logger(self):
 
@@ -450,16 +441,11 @@ class Model(PseudoSpectralKernel):
     def _print_status(self):
         """Output some basic stats."""
         if (not self.quiet) and ((self.tc % self.twrite)==0) and self.tc>0.:
-            self.ke = self._calc_ke()
-            self.cfl = self._calc_cfl()
-            #print 't=%16d, tc=%10d: cfl=%5.6f, ke=%9.9f' % (
-            #       self.t, self.tc, cfl, ke)
-            self.logger.info(' Step: %i, Time: %e, KE: %e, CFL: %f'
-                    %(self.tc,self.t,self.ke,self.cfl))
-
-
-            #assert cfl<1., 'CFL condition violated'
-            assert self.cfl<1., self.logger.error('CFL condition violated')
+            ke = self._calc_ke()
+            cfl = self._calc_cfl()
+            print 't=%16d, tc=%10d: cfl=%5.6f, ke=%9.9f' % (
+                   self.t, self.tc, cfl, ke)
+            assert cfl<1., "CFL condition violated"
 
     def _calc_diagnostics(self):
         # here is where we calculate diagnostics
