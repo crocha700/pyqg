@@ -18,6 +18,11 @@ Added built-in linear stability analysis.
 
 Added multi layer model subclass. 
 
+v0.1.5 (???)
+------------
+
+- Changed license to MIT
+
 v0.1.4 (22 Oct 2015)
 --------------------
 
