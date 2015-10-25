@@ -267,7 +267,7 @@ class Model(PseudoSpectralKernel):
         self.pmodes = evecs[:,asort]
 
     def stability_analysis(self):
-
+        """ Baroclinic instability analysis """
         self.omg = np.zeros_like(self.wv)+0.j
         I = np.eye(self.nz)
 
@@ -279,7 +279,22 @@ class Model(PseudoSpectralKernel):
                 Q = (self.ikQy - self.ilQx).imag[:,i,j]
                 L3 = np.dot(self.Ubg*I*self.k[i,j],L2) +\
                     np.dot(self.Vbg*I*self.l[i,j],L2)
+        
+    def vertical_modes(self):
+        """ Calculate standard vertical modes. Simply
+            the eigenvectors of the stretching matrix S """
 
+        evals,evecs = np.linalg.eig(-self.S) 
+
+        asort = evals.argsort()
+
+        # deformation radii
+        self.radii = np.zeros(self.nz)
+        self.radii[0] = 9.81*self.H/np.abs(self.f) # barotropic def. radius
+        self.radii[1:] = np.sqrt(1./evals[asort][1:])
+
+        # eigenstructure (it would be good to normalize this...)
+        self.pmodes = evecs[:,asort] 
                 # calculate most unstable mode
                 evals,evecs = sp.linalg.eig(L3+Q*I,L2)
                 imax = evals.imag.argmax()
