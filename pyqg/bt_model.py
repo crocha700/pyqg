@@ -22,7 +22,6 @@ class BTModel(model.Model):
        q = \nabla^2 \psi - \kappa_d^2 \psi
 
     """
-
     def __init__(self, beta=0.,  rd=0., H=1., U=0.,V=0., **kwargs):
         """
         Parameters
@@ -41,8 +40,15 @@ class BTModel(model.Model):
         self.rd = rd
         self.H = H
         self.U = U
+<<<<<<< ad53719a008af64fc5f5a1fada6dab2cc1d92329
         self.V = V
 
+||||||| merged common ancestors
+        
+=======
+        self.V = V
+        
+>>>>>>> Rebasing
         self.nz = 1
 
         # deformation wavenumber
@@ -64,7 +70,13 @@ class BTModel(model.Model):
         self.Qx = np.asarray(self.beta)[np.newaxis, ...]
 
         # background vel.
+<<<<<<< ad53719a008af64fc5f5a1fada6dab2cc1d92329
         self.set_UV(self.U,self.V)
+||||||| merged common ancestors
+        self.set_U(self.U)        
+=======
+        self.set_UV(self.U,self.V)        
+>>>>>>> Rebasing
 
         # topography
         self.hb = self.hb * self.f/self.H
