@@ -1,7 +1,7 @@
 What's New
 ==========
 
-v0.1.4 (? ? 2015)
+v0.2.0 (?? Oct 2015)
 --------------------
 
 Fixed bug related to the sign of advection terms (:issue:`86`). 
@@ -12,12 +12,18 @@ Added topography.
 
 Added new printout that leverages on standard python logger.
 
-Added automated linear stability analysis.
+Added built-in method to calculate vertical modes and deformation radii.
+
+Added built-in linear stability analysis.
 
 Added multi layer model subclass. 
 
-Fixed bug in _calc_diagnostics (:issue:`75`). Now diagnostics start being averaged at
-tavestart.
+v0.1.4 (22 Oct 2015)
+--------------------
+
+Fixed bug related to the sign of advection terms (:issue:`86`).
+
+Fixed bug in _calc_diagnostics (:issue:`75`). Now diagnostics start being averaged at tavestart.
 
 v0.1.3 (4 Sept 2015)
 --------------------
