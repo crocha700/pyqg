@@ -369,8 +369,7 @@ cdef class PseudoSpectralKernel:
                     self.uq[k,j,i] = (self.u[k,j,i]+self.Ubg[k]) * self.q[k,j,i]
                     self.vq[k,j,i] = (self.v[k,j,i]+self.Vbg[k]) * self.q[k,j,i]
 
-
-        # add topographic term
+    # add topographic term
         for j in prange(self.Ny, nogil=True, schedule='static',
                   chunksize=self.chunksize,
                   num_threads=self.num_threads):
@@ -379,7 +378,7 @@ cdef class PseudoSpectralKernel:
                         self.Ubg[self.Nz-1]) * self._hb[j,i]
                 self.vq[self.Nz-1,j,i] += (self.v[self.Nz-1,j,i] +
                         self.Vbg[self.Nz-1]) * self._hb[j,i]
-
+   
         # transform to get spectral advective flux
         with gil:
             self.fft_uq_to_uqh()
