@@ -368,6 +368,27 @@ cdef class PseudoSpectralKernel:
                 for i in range(self.Nx):
                     self.uq[k,j,i] = (self.u[k,j,i]+self.Ubg[k]) * self.q[k,j,i]
                     self.vq[k,j,i] = (self.v[k,j,i]+self.Vbg[k]) * self.q[k,j,i]
+<<<<<<< 0802458b1678edd6a6f38775d1b8a62e8237c1f6
+||||||| merged common ancestors
+        
+        # add topographic term
+        if self.hb:
+            for j in prange(self.Ny, nogil=True, schedule='static',
+                      chunksize=self.chunksize,  
+                      num_threads=self.num_threads):
+                for i in range(self.Nx):
+                    self.uq[-1,j,i] += (self.u[-1,j,i] + self.Ubg[-1]) * self.hb[j,i]
+                    self.vq[-1,j,i] += (self.v[-1,j,i] + self.Vbg[-1]) * self.hb[j,i]
+=======
+        
+        # add topographic term
+        for j in prange(self.Ny, nogil=True, schedule='static',
+                  chunksize=self.chunksize,  
+                  num_threads=self.num_threads):
+            for i in range(self.Nx):
+                self.uq[-1,j,i] += (self.u[-1,j,i] + self.Ubg[-1]) * self._hb[j,i]
+                self.vq[-1,j,i] += (self.v[-1,j,i] + self.Vbg[-1]) * self._hb[j,i]
+>>>>>>> Rebasing with master
 
     # add topographic term
         for j in prange(self.Ny, nogil=True, schedule='static',
