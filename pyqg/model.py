@@ -3,6 +3,7 @@ import scipy as sp
 from kernel import PseudoSpectralKernel, tendency_forward_euler, tendency_ab2, tendency_ab3
 from numpy import pi
 import logging
+
 try:   
     import mkl
     np.use_fastnumpy = True
