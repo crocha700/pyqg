@@ -225,41 +225,6 @@ class Model(PseudoSpectralKernel):
         while(self.t < self.tmax):
             self._step_forward()
 
-    def stability_analysis(self,bottom_friction=False):
-        """ Baroclinic instability analysis """
-        self.omg = np.zeros_like(self.wv)+0.j
-        self.evec = np.zeros_like(self.qh)
-        I = np.eye(self.nz)
-
-        L2 = self.S[:,:,np.newaxis,np.newaxis] - self.wv2*I[:,:,np.newaxis,np.newaxis]
-
-        Q =  I[:,:,np.newaxis,np.newaxis]*(self.ikQy - self.ilQx).imag
-
-        Uk =(self.Ubg*I)[:,:,np.newaxis,np.newaxis]*self.k
-        Vl =(self.Vbg*I)[:,:,np.newaxis,np.newaxis]*self.l
-        L3 = np.einsum('ij...,jk...->ik...',Uk+Vl,L2) + 0j
-
-        if bottom_friction:
-            L3[-1,-1,:,:] += 1j*self.rek*self.wv2
-
-        #L4 = np.linalg.inv(L2.T)
-        L4 = self.a.T
-
-        M = np.einsum('...ij,...jk->...ik',L4,(L3+Q).T)
-
-        evals,evecs = np.linalg.eig(M)
-
-        # select the mode with maximum growth rate
-        # this is sloppy; it would be better to
-        # avoid the  loop...
-        imax = evals.imag.argmax(axis=-1)
-
-        for i in range(self.nl):
-            for j in range(self.nk):
-                self.omg[i,j] = evals.T[imax.T[i,j],i,j]
-                self.evec[:,i,j] = evecs.T[imax.T[i,j],:,i,j]
-
-        
     def stability_analysis(self):
         """ Baroclinic instability analysis """
         self.omg = np.zeros_like(self.wv)+0.j
@@ -290,7 +255,7 @@ class Model(PseudoSpectralKernel):
         """ Calculate standard vertical modes. Simply
             the eigenvectors of the stretching matrix S """
 
-        evals,evecs = np.linalg.eig(-self.S) 
+        evals,evecs = np.linalg.eig(-self.S)
 
         asort = evals.argsort()
 
@@ -300,7 +265,7 @@ class Model(PseudoSpectralKernel):
         self.radii[1:] = np.sqrt(1./evals[asort][1:])
 
         # eigenstructure (it would be good to normalize this...)
-        self.pmodes = evecs[:,asort] 
+        self.pmodes = evecs[:,asort]
 
 
     ### PRIVATE METHODS - not meant to be called by user ###
@@ -411,7 +376,7 @@ class Model(PseudoSpectralKernel):
             rek=self.rek,
             fftw_num_threads=self.ntd,
         )
-       
+
         self.logger.info(' Kernel initialized')
 
         # still need to initialize a few state variables here, outside kernel
@@ -419,7 +384,7 @@ class Model(PseudoSpectralKernel):
         #self.dqhdt_forc = np.zeros_like(self.qh)
         #self.dqhdt_p = np.zeros_like(self.qh)
         #self.dqhdt_pp = np.zeros_like(self.qh)
-        
+
     # logger
     def _initialize_logger(self):
 

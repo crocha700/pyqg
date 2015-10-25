@@ -22,6 +22,12 @@ class BTModel(model.Model):
        q = \nabla^2 \psi - \kappa_d^2 \psi
 
     """
+<<<<<<< f3a7a0c830a6e724720fc5c22044b755a61134e4
+||||||| merged common ancestors
+    
+=======
+
+>>>>>>> Rebasing with master
     def __init__(self, beta=0.,  rd=0., H=1., U=0.,V=0., **kwargs):
         """
         Parameters
@@ -40,15 +46,8 @@ class BTModel(model.Model):
         self.rd = rd
         self.H = H
         self.U = U
-<<<<<<< ad53719a008af64fc5f5a1fada6dab2cc1d92329
-        self.V = V
-
-||||||| merged common ancestors
-        
-=======
         self.V = V
         
->>>>>>> Rebasing
         self.nz = 1
 
         # deformation wavenumber
@@ -70,13 +69,7 @@ class BTModel(model.Model):
         self.Qx = np.asarray(self.beta)[np.newaxis, ...]
 
         # background vel.
-<<<<<<< ad53719a008af64fc5f5a1fada6dab2cc1d92329
         self.set_UV(self.U,self.V)
-||||||| merged common ancestors
-        self.set_U(self.U)        
-=======
-        self.set_UV(self.U,self.V)        
->>>>>>> Rebasing
 
         # topography
         self.hb = self.hb * self.f/self.H
@@ -141,7 +134,7 @@ class BTModel(model.Model):
         return 2.*pi*np.sqrt( self.H / ens ) / year
 
     def _calc_derived_fields(self):
-        self.xi =self.ifft( -self.wv2*self.ph)
+        self.xi =self.ifft2( -self.wv2*self.ph)
         self.Jpxi = self._advect(self.xi, self.u, self.v)
 
     def _initialize_model_diagnostics(self):
@@ -152,7 +145,7 @@ class BTModel(model.Model):
             function= (lambda self:
                       np.abs(self.qh)**2.)
         )
-
+        
         self.add_diagnostic('KEflux',
                 description='spectral divergence of flux of kinetic energy',
                 function= (lambda self:
