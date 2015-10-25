@@ -97,11 +97,28 @@ class QGModel(model.Model):
         self.H2 = H1/delta
         self.U1 = U1
         self.U2 = U2
+<<<<<<< 7d6eaf15c60fe502b5a79dd621ca98ff4897c2a0
         self.V1 = V1
         self.V2 = V2
 
-        #self.filterfac = filterfac
+||||||| merged common ancestors
+=======
+        self.V1 = 0.
+        self.V2 = 0.
 
+
+>>>>>>> Adds topographic call to kernel
+        #self.filterfac = filterfac
+<<<<<<< 7d6eaf15c60fe502b5a79dd621ca98ff4897c2a0
+
+||||||| merged common ancestors
+        
+=======
+        
+        self.f = f
+        self.hb =hb
+
+>>>>>>> Adds topographic call to kernel
         self.nz = 2
         
         super(QGModel, self).__init__(**kwargs)
@@ -145,9 +162,17 @@ class QGModel(model.Model):
                                self.ikQy2[np.newaxis,...]]) 
         self.ilQx = 0.
 
+<<<<<<< 7d6eaf15c60fe502b5a79dd621ca98ff4897c2a0
        # topography
         self.hb = self.hb * self.f/self.H2
 
+||||||| merged common ancestors
+=======
+       # topography
+        if self.hb is not None:
+            self.hb = self.hb * self.f/self.H2
+
+>>>>>>> Adds topographic call to kernel
         # layer spacing
         self.del1 = self.delta/(self.delta+1.)
         self.del2 = (self.delta+1.)**-1
@@ -216,6 +241,7 @@ class QGModel(model.Model):
         self.U2 = U2
         #self.Ubg = np.array([U1,U2])[:,np.newaxis,np.newaxis]
         self.Ubg = np.array([U1,U2])
+<<<<<<< 7d6eaf15c60fe502b5a79dd621ca98ff4897c2a0
         self.Vbg = np.array([0.,0.])
 
     def layer2modal(self):
@@ -229,6 +255,10 @@ class QGModel(model.Model):
         self.q_bt = np.fft.irfft2(self.qh_bt)
         self.q_bc = np.fft.irfft2(self.qh_bc)
 
+||||||| merged common ancestors
+=======
+        self.Vbg = np.array([0.,0.])
+>>>>>>> Adds topographic call to kernel
 
     def layer2modal(self):
         """ calculate modal streamfunction and PV """
