@@ -302,7 +302,7 @@ cdef class PseudoSpectralKernel:
 
     # set bottom topography
     def set_hb(self, np.ndarray[DTYPE_real_t, ndim=2] b):
-        cdef DTYPE_real_t [:,:] b_view = b*self._fh 
+        cdef DTYPE_real_t [:,:] b_view = b*self._fh
         self.hb[:] = b_view
 
     def _invert(self):
