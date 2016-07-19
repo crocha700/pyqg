@@ -170,6 +170,9 @@ class Model(PseudoSpectralKernel):
         if f:
             self.f = f
             self.f2 = f**2
+        else:
+            self.f = 0.
+            self.f2 = 0.
 
 
         self._initialize_logger()
@@ -425,6 +428,8 @@ class Model(PseudoSpectralKernel):
             self.a, self.kk, self.ll,
             self.Ubg, self.Qy,
             self.filtr,
+            Hn=self.Hi[-1],
+            f=self.f,
             dt=self.dt,
             rek=self.rek,
             fftw_num_threads=self.ntd
