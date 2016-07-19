@@ -78,6 +78,11 @@ cdef class PseudoSpectralKernel:
     # friction parameter
     cdef public DTYPE_real_t _rek
 
+    # coriolis parameter
+    cdef public DTYPE_real_t _f
+    # thickness of bottom layer
+    cdef public DTYPE_real_t _HN
+
     # time
     cdef public int tc
     cdef public DTYPE_real_t _dt
@@ -174,7 +179,7 @@ cdef class PseudoSpectralKernel:
         vqh = self._empty_com()
         self.vqh = vqh
 
-        qtopo = np.zeros((self.Ny,self.Nx),DTYPE_real)
+        self.qtopo = np.zeros((self.Ny,self.Nx), dtype=DTYPE_real)
 
         # dummy variables for diagnostic ffts
         dfftin = self._empty_real()
@@ -299,7 +304,7 @@ cdef class PseudoSpectralKernel:
         self.fft_q_to_qh()
 
     def set_h(self, np.ndarray[DTYPE_real_t, ndim=2] b):
-            cdef  DTYPE_real_t [:, :, :] b_view = b*self._f/self._HN
+            cdef  DTYPE_real_t [:, :] b_view = b*self._f/self._HN
             self.qtopo[:] = b_view
 
     def _invert(self):
@@ -522,7 +527,6 @@ cdef class PseudoSpectralKernel:
     property vq:
         def __get__(self):
             return np.asarray(self.vq)
-
     property qtopo:
         def __get__(self):
             return np.asarray(self.qtopo)
