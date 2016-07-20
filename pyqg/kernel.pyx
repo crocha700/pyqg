@@ -52,6 +52,7 @@ cdef class PseudoSpectralKernel:
     cdef DTYPE_com_t [:, :, :] vqh
     # topographic background PV
     cdef DTYPE_real_t [:, :] qtopo
+
     # the tendencies
     cdef DTYPE_com_t [:, :, :] dqhdt
     cdef DTYPE_com_t [:, :, :] dqhdt_p
@@ -179,7 +180,8 @@ cdef class PseudoSpectralKernel:
         vqh = self._empty_com()
         self.vqh = vqh
 
-        self.qtopo = np.zeros((self.Ny,self.Nx), dtype=DTYPE_real)
+        qtopo = np.zeros((self.Ny,self.Nx), dtype=DTYPE_real)
+        self.qtopo = qtopo
 
         # dummy variables for diagnostic ffts
         dfftin = self._empty_real()
