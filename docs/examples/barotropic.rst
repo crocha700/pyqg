@@ -28,6 +28,13 @@ McWilliams performed freely-evolving 2D turbulence
     # in this example we used ntd=4, four threads
     # if your machine has more (or fewer) cores available, you could try changing it
 
+
+.. parsed-literal::
+
+    INFO:  Logger initialized
+    INFO:  Kernel initialized
+
+
 Initial condition
 -----------------
 
@@ -38,7 +45,7 @@ The initial condition is random, with a prescribed spectrum
 
    |\hat{\psi}|^2 = A \,\kappa^{-1}\left[1 + \left(\frac{\kappa}{6}\right)^4\right]^{-1}\,,
 
-where :math:`\kappa` is the wavenumber magnitude. The constant A is
+ where :math:`\kappa` is the wavenumber magnitude. The constant A is
 determined so that the initial energy is :math:`KE = 0.5`.
 
 .. code:: python
@@ -103,15 +110,16 @@ visualization).
 
 .. parsed-literal::
 
-    t=               1, tc=      1000: cfl=0.104428, ke=0.496432737
-    t=               1, tc=      2000: cfl=0.110651, ke=0.495084591
-    t=               2, tc=      3000: cfl=0.101385, ke=0.494349348
-    t=               3, tc=      4000: cfl=0.113319, ke=0.493862801
-    t=               5, tc=      5000: cfl=0.112978, ke=0.493521035
-    t=               6, tc=      6000: cfl=0.101435, ke=0.493292057
-    t=               7, tc=      7000: cfl=0.092574, ke=0.493114415
-    t=               8, tc=      8000: cfl=0.096229, ke=0.492987232
-    t=               9, tc=      9000: cfl=0.097924, ke=0.492899499
+    INFO: Step: 1000, Time: 1.00e+00, KE: 4.96e-01, CFL: 0.111
+    INFO: Step: 2000, Time: 2.00e+00, KE: 4.95e-01, CFL: 0.108
+    INFO: Step: 3000, Time: 3.00e+00, KE: 4.94e-01, CFL: 0.118
+    INFO: Step: 4000, Time: 4.00e+00, KE: 4.93e-01, CFL: 0.129
+    INFO: Step: 5000, Time: 5.00e+00, KE: 4.93e-01, CFL: 0.117
+    INFO: Step: 6000, Time: 6.00e+00, KE: 4.93e-01, CFL: 0.111
+    INFO: Step: 7000, Time: 7.00e+00, KE: 4.92e-01, CFL: 0.094
+    INFO: Step: 8000, Time: 8.00e+00, KE: 4.92e-01, CFL: 0.098
+    INFO: Step: 9000, Time: 9.00e+00, KE: 4.92e-01, CFL: 0.106
+    INFO: Step: 10000, Time: 1.00e+01, KE: 4.92e-01, CFL: 0.122
 
 
 
@@ -120,16 +128,16 @@ visualization).
 
 .. parsed-literal::
 
-    t=               9, tc=     10000: cfl=0.103278, ke=0.492830631
-    t=              10, tc=     11000: cfl=0.102686, ke=0.492775849
-    t=              11, tc=     12000: cfl=0.099865, ke=0.492726644
-    t=              12, tc=     13000: cfl=0.110933, ke=0.492679673
-    t=              13, tc=     14000: cfl=0.102899, ke=0.492648562
-    t=              14, tc=     15000: cfl=0.102052, ke=0.492622263
-    t=              15, tc=     16000: cfl=0.106399, ke=0.492595449
-    t=              16, tc=     17000: cfl=0.122508, ke=0.492569708
-    t=              17, tc=     18000: cfl=0.120618, ke=0.492507272
-    t=              19, tc=     19000: cfl=0.103734, ke=0.492474633
+    INFO: Step: 11000, Time: 1.10e+01, KE: 4.92e-01, CFL: 0.121
+    INFO: Step: 12000, Time: 1.20e+01, KE: 4.92e-01, CFL: 0.129
+    INFO: Step: 13000, Time: 1.30e+01, KE: 4.92e-01, CFL: 0.099
+    INFO: Step: 14000, Time: 1.40e+01, KE: 4.92e-01, CFL: 0.111
+    INFO: Step: 15000, Time: 1.50e+01, KE: 4.92e-01, CFL: 0.112
+    INFO: Step: 16000, Time: 1.60e+01, KE: 4.92e-01, CFL: 0.100
+    INFO: Step: 17000, Time: 1.70e+01, KE: 4.92e-01, CFL: 0.104
+    INFO: Step: 18000, Time: 1.80e+01, KE: 4.92e-01, CFL: 0.104
+    INFO: Step: 19000, Time: 1.90e+01, KE: 4.92e-01, CFL: 0.108
+    INFO: Step: 20000, Time: 2.00e+01, KE: 4.92e-01, CFL: 0.126
 
 
 
@@ -138,16 +146,16 @@ visualization).
 
 .. parsed-literal::
 
-    t=              20, tc=     20000: cfl=0.113210, ke=0.492452605
-    t=              21, tc=     21000: cfl=0.095246, ke=0.492439588
-    t=              22, tc=     22000: cfl=0.092449, ke=0.492429553
-    t=              23, tc=     23000: cfl=0.115412, ke=0.492419773
-    t=              24, tc=     24000: cfl=0.125958, ke=0.492407434
-    t=              25, tc=     25000: cfl=0.098588, ke=0.492396021
-    t=              26, tc=     26000: cfl=0.103689, ke=0.492387002
-    t=              27, tc=     27000: cfl=0.103893, ke=0.492379606
-    t=              28, tc=     28000: cfl=0.108417, ke=0.492371082
-    t=              29, tc=     29000: cfl=0.112969, ke=0.492361675
+    INFO: Step: 21000, Time: 2.10e+01, KE: 4.92e-01, CFL: 0.141
+    INFO: Step: 22000, Time: 2.20e+01, KE: 4.92e-01, CFL: 0.136
+    INFO: Step: 23000, Time: 2.30e+01, KE: 4.92e-01, CFL: 0.142
+    INFO: Step: 24000, Time: 2.40e+01, KE: 4.92e-01, CFL: 0.125
+    INFO: Step: 25000, Time: 2.50e+01, KE: 4.92e-01, CFL: 0.126
+    INFO: Step: 26000, Time: 2.60e+01, KE: 4.92e-01, CFL: 0.122
+    INFO: Step: 27000, Time: 2.70e+01, KE: 4.92e-01, CFL: 0.106
+    INFO: Step: 28000, Time: 2.80e+01, KE: 4.92e-01, CFL: 0.112
+    INFO: Step: 29000, Time: 2.90e+01, KE: 4.92e-01, CFL: 0.120
+    INFO: Step: 30000, Time: 3.00e+01, KE: 4.92e-01, CFL: 0.110
 
 
 
@@ -156,25 +164,20 @@ visualization).
 
 .. parsed-literal::
 
-    t=              30, tc=     30000: cfl=0.127132, ke=0.492352666
-    t=              31, tc=     31000: cfl=0.122900, ke=0.492331664
-    t=              32, tc=     32000: cfl=0.110486, ke=0.492317502
-    t=              33, tc=     33000: cfl=0.101901, ke=0.492302225
-    t=              34, tc=     34000: cfl=0.099996, ke=0.492294952
-    t=              35, tc=     35000: cfl=0.106513, ke=0.492290743
-    t=              36, tc=     36000: cfl=0.121426, ke=0.492286228
-    t=              37, tc=     37000: cfl=0.125573, ke=0.492283246
-    t=              38, tc=     38000: cfl=0.108975, ke=0.492280378
-    t=              38, tc=     39000: cfl=0.110105, ke=0.492278000
+    INFO: Step: 31000, Time: 3.10e+01, KE: 4.92e-01, CFL: 0.111
+    INFO: Step: 32000, Time: 3.20e+01, KE: 4.92e-01, CFL: 0.110
+    INFO: Step: 33000, Time: 3.30e+01, KE: 4.92e-01, CFL: 0.107
+    INFO: Step: 34000, Time: 3.40e+01, KE: 4.92e-01, CFL: 0.115
+    INFO: Step: 35000, Time: 3.50e+01, KE: 4.92e-01, CFL: 0.117
+    INFO: Step: 36000, Time: 3.60e+01, KE: 4.92e-01, CFL: 0.111
+    INFO: Step: 37000, Time: 3.70e+01, KE: 4.92e-01, CFL: 0.124
+    INFO: Step: 38000, Time: 3.80e+01, KE: 4.92e-01, CFL: 0.123
+    INFO: Step: 39000, Time: 3.90e+01, KE: 4.92e-01, CFL: 0.121
+    INFO: Step: 40000, Time: 4.00e+01, KE: 4.92e-01, CFL: 0.126
 
 
 
 .. image:: barotropic_files/barotropic_9_7.png
-
-
-.. parsed-literal::
-
-    t=              39, tc=     40000: cfl=0.104794, ke=0.492275760
 
 
 The genius of McWilliams (1984) was that he showed that the initial
@@ -218,7 +221,7 @@ Plotting spectra
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10c1b1a90>
+    <matplotlib.text.Text at 0x1166cde48>
 
 
 
@@ -242,11 +245,179 @@ Plotting spectra
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x10b5d2f50>
+    <matplotlib.text.Text at 0x116685d30>
 
 
 
 
 .. image:: barotropic_files/barotropic_15_1.png
+
+
+Adding topography
+=================
+
+pyqg supports bottom topography, which can be easily set by the user.
+Here we extend the example above to include a Guassian topographic bump.
+
+.. code:: python
+
+    mtopo = pyqg.BTModel(L=2.*np.pi, nx=256, 
+                     beta=0., H=1., rek=0., rd=None,
+                     tmax=40, dt=0.001, taveint=1, f=1.,
+                     ntd=4)
+
+
+.. parsed-literal::
+
+    INFO:  Logger initialized
+    INFO:  Kernel initialized
+
+
+.. code:: python
+
+    mtopo.set_q(qi)
+
+.. code:: python
+
+    # set topography
+    R2 = 1.
+    etab = 10*np.exp( -(m.x-np.pi)**2/R2  -(m.y-np.pi)**2/R2  )
+    etab = etab - etab.mean()
+    mtopo.set_h(etab)
+
+.. code:: python
+
+    # define a quick function
+    def plot_q(mtopo, qmax=20):
+        fig, ax = plt.subplots()
+        pc = ax.pcolormesh(mtopo.x,mtopo.y,mtopo.q.squeeze(), cmap='RdBu_r')
+        pc.set_clim([-qmax,qmax])
+        ax.set_xlim([0, 2*np.pi])
+        ax.set_ylim([0, 2*np.pi]);
+        ax.set_aspect(1)
+        plt.colorbar(pc)
+        plt.title('Time = %g' % mtopo.t)
+        plt.show()
+    
+    plot_q(mtopo)
+
+
+
+.. image:: barotropic_files/barotropic_20_0.png
+
+
+.. code:: python
+
+    for _ in mtopo.run_with_snapshots(tsnapstart=0, tsnapint=10):
+        plot_q(mtopo)
+
+
+.. parsed-literal::
+
+    INFO: Step: 1000, Time: 1.00e+00, KE: 4.96e-01, CFL: 0.109
+    INFO: Step: 2000, Time: 2.00e+00, KE: 4.95e-01, CFL: 0.096
+    INFO: Step: 3000, Time: 3.00e+00, KE: 4.94e-01, CFL: 0.117
+    INFO: Step: 4000, Time: 4.00e+00, KE: 4.93e-01, CFL: 0.095
+    INFO: Step: 5000, Time: 5.00e+00, KE: 4.93e-01, CFL: 0.091
+    INFO: Step: 6000, Time: 6.00e+00, KE: 4.93e-01, CFL: 0.094
+    INFO: Step: 7000, Time: 7.00e+00, KE: 4.92e-01, CFL: 0.098
+    INFO: Step: 8000, Time: 8.00e+00, KE: 4.92e-01, CFL: 0.091
+    INFO: Step: 9000, Time: 9.00e+00, KE: 4.92e-01, CFL: 0.121
+    INFO: Step: 10000, Time: 1.00e+01, KE: 4.92e-01, CFL: 0.113
+
+
+
+.. image:: barotropic_files/barotropic_21_1.png
+
+
+.. parsed-literal::
+
+    INFO: Step: 11000, Time: 1.10e+01, KE: 4.92e-01, CFL: 0.110
+    INFO: Step: 12000, Time: 1.20e+01, KE: 4.92e-01, CFL: 0.108
+    INFO: Step: 13000, Time: 1.30e+01, KE: 4.92e-01, CFL: 0.120
+    INFO: Step: 14000, Time: 1.40e+01, KE: 4.92e-01, CFL: 0.105
+    INFO: Step: 15000, Time: 1.50e+01, KE: 4.92e-01, CFL: 0.119
+    INFO: Step: 16000, Time: 1.60e+01, KE: 4.92e-01, CFL: 0.133
+    INFO: Step: 17000, Time: 1.70e+01, KE: 4.92e-01, CFL: 0.124
+    INFO: Step: 18000, Time: 1.80e+01, KE: 4.92e-01, CFL: 0.097
+    INFO: Step: 19000, Time: 1.90e+01, KE: 4.92e-01, CFL: 0.103
+    INFO: Step: 20000, Time: 2.00e+01, KE: 4.92e-01, CFL: 0.114
+
+
+
+.. image:: barotropic_files/barotropic_21_3.png
+
+
+.. parsed-literal::
+
+    INFO: Step: 21000, Time: 2.10e+01, KE: 4.92e-01, CFL: 0.116
+    INFO: Step: 22000, Time: 2.20e+01, KE: 4.92e-01, CFL: 0.126
+    INFO: Step: 23000, Time: 2.30e+01, KE: 4.92e-01, CFL: 0.108
+    INFO: Step: 24000, Time: 2.40e+01, KE: 4.92e-01, CFL: 0.128
+    INFO: Step: 25000, Time: 2.50e+01, KE: 4.92e-01, CFL: 0.137
+    INFO: Step: 26000, Time: 2.60e+01, KE: 4.91e-01, CFL: 0.136
+    INFO: Step: 27000, Time: 2.70e+01, KE: 4.91e-01, CFL: 0.126
+    INFO: Step: 28000, Time: 2.80e+01, KE: 4.91e-01, CFL: 0.128
+    INFO: Step: 29000, Time: 2.90e+01, KE: 4.91e-01, CFL: 0.129
+    INFO: Step: 30000, Time: 3.00e+01, KE: 4.91e-01, CFL: 0.136
+
+
+
+.. image:: barotropic_files/barotropic_21_5.png
+
+
+.. parsed-literal::
+
+    INFO: Step: 31000, Time: 3.10e+01, KE: 4.91e-01, CFL: 0.136
+    INFO: Step: 32000, Time: 3.20e+01, KE: 4.91e-01, CFL: 0.136
+    INFO: Step: 33000, Time: 3.30e+01, KE: 4.91e-01, CFL: 0.131
+    INFO: Step: 34000, Time: 3.40e+01, KE: 4.91e-01, CFL: 0.126
+    INFO: Step: 35000, Time: 3.50e+01, KE: 4.91e-01, CFL: 0.126
+    INFO: Step: 36000, Time: 3.60e+01, KE: 4.91e-01, CFL: 0.108
+    INFO: Step: 37000, Time: 3.70e+01, KE: 4.91e-01, CFL: 0.133
+    INFO: Step: 38000, Time: 3.80e+01, KE: 4.91e-01, CFL: 0.131
+    INFO: Step: 39000, Time: 3.90e+01, KE: 4.91e-01, CFL: 0.112
+    INFO: Step: 40000, Time: 4.00e+01, KE: 4.91e-01, CFL: 0.143
+
+
+
+.. image:: barotropic_files/barotropic_21_7.png
+
+
+.. code:: python
+
+    fig = plt.figure(figsize=(13,5))
+    plt.subplot(121)
+    pc = plt.contourf(mtopo.x,mtopo.y,np.fft.irfft2(mtopo.ph[0]),np.linspace(-4,4,10),cmap='RdBu_r')
+    plt.contour(mtopo.x,mtopo.y,etab,colors='k')
+    ax.set_xlim([0, 2*np.pi])
+    ax.set_ylim([0, 2*np.pi]);
+    #pc.set_clim([-40,40])
+    plt.colorbar(pc)
+    ax.set_aspect(1)
+    plt.title('Streamfunction')
+    
+    plt.subplot(122)
+    pc = plt.contourf(mtopo.x,mtopo.y,mtopo.q[0],np.linspace(-20,20,10),cmap='RdBu_r')
+    plt.contour(mtopo.x,mtopo.y,etab,colors='k')
+    ax.set_xlim([0, 2*np.pi])
+    ax.set_ylim([0, 2*np.pi]);
+    #pc.set_clim([-40,40])
+    plt.colorbar(pc)
+    ax.set_aspect(1)
+    plt.title('PV')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.text.Text at 0x118631630>
+
+
+
+
+.. image:: barotropic_files/barotropic_22_1.png
+
 
 
