@@ -180,7 +180,7 @@ cdef class PseudoSpectralKernel:
         vqh = self._empty_com()
         self.vqh = vqh
 
-        qtopo = np.zeros((self.Ny,self.Nx), dtype=DTYPE_real)
+        qtopo = self._empty_real2()
         self.qtopo = qtopo
 
         # dummy variables for diagnostic ffts
@@ -262,6 +262,16 @@ cdef class PseudoSpectralKernel:
                                  pyfftw.simd_alignment, dtype=DTYPE_real)
         ELSE:
             return np.empty(shape, dtype=DTYPE_real)
+
+    def _empty_real2(self):
+        """Allocate a space-grid-sized variable for use with fftw transformations."""
+        shape = (self.Ny, self.Ny)
+        IF PYQG_USE_PYFFTW:
+            return pyfftw.n_byte_align_empty(shape,
+                                pyfftw.simd_alignment, dtype=DTYPE_real)
+        ELSE:
+            return np.empty(shape, dtype=DTYPE_real)
+
 
     def _empty_com(self):
         """Allocate a Fourier-grid-sized variable for use with fftw transformations."""
@@ -368,22 +378,18 @@ cdef class PseudoSpectralKernel:
 
         cdef Py_ssize_t k, j, i
 
+
         # multiply to get advective flux in space
         for k in range(self.Nz):
             for j in prange(self.Ny, nogil=True, schedule='static',
                       chunksize=self.chunksize,
                       num_threads=self.num_threads):
                 for i in range(self.Nx):
+                    if k == self.Nz-1:
+                        self.q[k,j,i] = self.q[k,j,i] + self.qtopo[j,i]
+
                     self.uq[k,j,i] = (self.u[k,j,i]+self.Ubg[k]) * self.q[k,j,i]
                     self.vq[k,j,i] = self.v[k,j,i] * self.q[k,j,i]
-
-        # adds flux of PV due to topography to the lower layer
-        for j in prange(self.Ny, nogil=True, schedule='static',
-                  chunksize=self.chunksize,
-                  num_threads=self.num_threads):
-            for i in range(self.Nx):
-                self.uq[-1,j,i] += (self.u[-1,j,i]+self.Ubg[-1]) * self.qtopo[j,i]
-                self.vq[-1,j,i] += self.v[-1,j,i] * self.qtopo[j,i]
 
         # transform to get spectral advective flux
         with gil:
